@@ -1,4 +1,3 @@
-
 from rest_framework import generics, permissions
 from rest_framework.response import Response
 from knox.models import AuthToken
@@ -39,6 +38,7 @@ class LoginAPI(KnoxLoginView):
         return super(LoginAPI, self).post(request, format=None)
         return redirect('http://127.0.0.1:8000/api/movie/')
         # return HttpResponseRedirect(redirect_to='api/movie')
+
 
 # Create your views here.
 class UserMovieView(ModelViewSet):
