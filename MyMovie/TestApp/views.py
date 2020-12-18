@@ -41,3 +41,7 @@ class LoginAPI(KnoxLoginView):
         # return HttpResponseRedirect(redirect_to='api/movie')
 
 # Create your views here.
+class UserMovieView(ModelViewSet):
+    # permission_classes = (IsAuthorOrReadOnly,)
+    queryset = UserMovie.objects.all()
+    serializer_class = UserMovieSerializer
