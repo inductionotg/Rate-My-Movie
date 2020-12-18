@@ -19,6 +19,9 @@ from django.urls import path,include
 from TestApp.views import RegisterAPI,LoginAPI
 from knox import views as knox_views
 from TestApp import  views
+from rest_framework import routers
+router=routers.DefaultRouter()
+router.register('api/movie',views.UserMovieView)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
