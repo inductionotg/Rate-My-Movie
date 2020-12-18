@@ -9,7 +9,6 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.views import LoginView as KnoxLoginView
 from rest_framework.viewsets import ModelViewSet
 from TestApp.models import *
-from TestApp.permissions import *
 from django.shortcuts import redirect
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
