@@ -1,0 +1,9 @@
+ def get_serializer_context(self):
+            return {'Rating': self.kwargs['Rating'], 'request': self.request}
+
+def validate(self, data):
+
+    Rating = self.context["Rating"]
+    if Review.objects.filter(Rating=Rating, username=self.context["request"].user).exists():
+           raise serializers.ValidationError("This user has already added rating")
+    return data
