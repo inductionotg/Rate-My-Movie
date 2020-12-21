@@ -26,6 +26,13 @@ class UserMovieSerializer(serializers.ModelSerializer):
         fields='__all__'
 
 
+class RateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RatingRates
+        fields = ['Rating',]
+
+
+
 
 class RateSerializer(serializers.ModelSerializer):
     class Meta:
