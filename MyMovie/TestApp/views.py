@@ -50,7 +50,7 @@ class UserMovieView(ModelViewSet):
     def create(self, request, *args, **kwargs):
         movie_data = request.data
 
-        new_rate = int(RatingRates.objects.create(rates=movie_data["rates"]["Rating"]))
+        new_rate = RatingRates.objects.create(Rating=movie_data["rates"]["Rating"])
         new_rate.save()
 
         new_movie = UserMovie.objects.create(Movie=movie_data['Movie'], Title=movie_data['Title'], rates=new_rate)
