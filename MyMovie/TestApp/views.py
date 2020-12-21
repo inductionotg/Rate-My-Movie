@@ -1,16 +1,14 @@
-from rest_framework import generics, permissions
+from rest_framework import generics, viewsets
 from rest_framework.response import Response
 from knox.models import AuthToken
-from TestApp.serializer import UserSerializer, RegisterSerializer, UserMovieSerializer
+from TestApp.serializer import UserSerializer, RegisterSerializer, UserMovieSerializer,RateSerializer
 from django.contrib.auth import login
 from rest_framework import permissions
 from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.views import LoginView as KnoxLoginView
 from rest_framework.viewsets import ModelViewSet
 from TestApp.models import *
-from django.shortcuts import redirect
-from rest_framework.decorators import permission_classes
-from rest_framework.permissions import IsAuthenticated
+
 
 
 # Register API
@@ -43,5 +41,27 @@ class LoginAPI(KnoxLoginView):
 # Create your views here.
 class UserMovieView(ModelViewSet):
     # permission_classes = (IsAuthorOrReadOnly,)
-    queryset = UserMovie.objects.all()
+    #queryset = UserMovie.objects.all()
     serializer_class = UserMovieSerializer
+
+    def get_queryset(self):
+        movie = UserMovie.objects.all()
+        return movie
+
+    def create(self, request, *args, **kwargs):
+        movie_data = request.data
+
+        new_rate = RatingRates.objects.create(rates=movie_data["Rating"]["rates"])
+        new_rate.save()
+
+        new_movie = UserMovie.objects.create(Movie=movie_data['Movie'], Title=movie_data['Title'], rates=new_rate)
+        new_movie.save()
+        serializer = UserMovieSerializer(new_movie)
+        return Response(serializer)
+
+class RatingRatesView(viewsets.ModelViewSet):
+    serializer_class = RateSerializer
+
+    def get_queryset(self):
+        rates = RatingRates.objects.all()
+        return rates
