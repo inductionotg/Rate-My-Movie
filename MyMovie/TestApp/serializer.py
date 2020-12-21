@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from TestApp.models import UserMovie
+from TestApp.models import UserMovie,RatingRates
 
 
 # User Serializer
@@ -20,18 +20,15 @@ class RegisterSerializer(serializers.ModelSerializer):
     def create(self, validated_data):
         user = User.objects.create_user(validated_data['username'], validated_data['email'], validated_data['password'])
         return user
-
-        def get_serializer_context(self):
-            return {'Rating': self.kwargs['Rating'], 'request': self.request}
-
-
-    def validate(self, data):
-        Rating = self.context["Rating"]
-        if UserMovie.objects.filter(Rating=Rating, username=self.context["request"].user).exists():
-            raise serializers.ValidationError("This user has already added rating")
-        return data
 class UserMovieSerializer(serializers.ModelSerializer):
     class Meta:
         model=UserMovie
         fields='__all__'
+
+
+
+class RateSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = RatingRates
+        fields = ('Rating',)
 
