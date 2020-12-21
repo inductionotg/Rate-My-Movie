@@ -23,13 +23,13 @@ class RegisterSerializer(serializers.ModelSerializer):
 class UserMovieSerializer(serializers.ModelSerializer):
     class Meta:
         model=UserMovie
-        fields='__all__'
+        fields=['id','Movie','Title','rates']
 
 
 class RateSerializer(serializers.ModelSerializer):
     class Meta:
         model = RatingRates
-        fields = ['Rating',]
+        fields = ['id','Rating',]
 
 
 
