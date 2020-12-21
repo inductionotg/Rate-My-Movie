@@ -22,7 +22,8 @@ from TestApp import views
 from rest_framework import routers
 
 router = routers.DefaultRouter()
-router.register('api/movie', views.UserMovieView)
+router.register('movie',views.UserMovieView,basename='UserMovie')
+router.register('RatingRates',views.RatingRatesView,basename='RatingRates')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
