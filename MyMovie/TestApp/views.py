@@ -8,7 +8,8 @@ from rest_framework.authtoken.serializers import AuthTokenSerializer
 from knox.views import LoginView as KnoxLoginView
 from rest_framework.viewsets import ModelViewSet
 from TestApp.models import *
-
+from rest_framework.generics import ListAPIView
+from django.shortcuts import render, redirect
 
 # Register API
 class RegisterAPI(generics.GenericAPIView):
@@ -32,7 +33,7 @@ class LoginAPI(KnoxLoginView):
         serializer.is_valid(raise_exception=True)
         user = serializer.validated_data['user']
         login(request, user)
-        return redirect('http://127.0.0.1:8000/movie/')
+        return redirect('http://127.0.0.1:8000/jointview/')
         return super(LoginAPI, self).post(request, format=None)
 
         # return HttpResponseRedirect(redirect_to='api/movie')
@@ -51,7 +52,7 @@ class RatingRatesView(viewsets.ModelViewSet):
     def get_queryset(self):
         rates = RatingRates.objects.all()
         return rates
-class JointView(ModelViewSet):
+class JointView(ListAPIView):
     queryset = UserMovie.objects.raw(
         'select TestApp_usermovie.id,TestApp_usermovie.Movie,TestApp_usermovie.Title,TestApp_ratingrates.Rating from TestApp_usermovie  inner join TestApp_ratingrates on TestApp_usermovie.id=TestApp_ratingrates.id')
     serializer_class = JoinModelSerializer
