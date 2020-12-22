@@ -24,7 +24,7 @@ from rest_framework import routers
 router = routers.DefaultRouter()
 router.register('movie', views.UserMovieView, basename='UserMovie')
 router.register('RatingRates', views.RatingRatesView, basename='RatingRates')
-router.register('JointView',views.JointView,basename='JointView')
+#router.register('JointView',views.JointView,basename='JointView')
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,5 +32,6 @@ urlpatterns = [
     path('api/login/', LoginAPI.as_view(), name='login'),
     path('api/logout/', knox_views.LogoutView.as_view(), name='logout'),
     path('api/logoutall/', knox_views.LogoutAllView.as_view(), name='logoutall'),
-    path('', include(router.urls))
+    path('', include(router.urls)),
+    path('jointview/',views.JointView.as_view())
 ]
