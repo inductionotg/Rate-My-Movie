@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from django.contrib.auth.models import User
-from TestApp.models import UserMovie, RatingRates
+from TestApp.models import UserMovie, RatingRates,JoinModel
 
 
 # User Serializer
@@ -25,7 +25,7 @@ class RegisterSerializer(serializers.ModelSerializer):
 class UserMovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = UserMovie
-        fields = ['id', 'Movie', 'Title','rates']
+        fields = ['id', 'Movie', 'Title']
 
 
 class RateSerializer(serializers.ModelSerializer):
@@ -38,3 +38,7 @@ class RateSerializer(serializers.ModelSerializer):
     class Meta:
         model = RatingRates
         fields = ('Rating',)"""
+class JoinModelSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=JoinModel
+        fields=['id','Movie','Rating','Title']
