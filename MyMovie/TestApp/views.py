@@ -1,4 +1,4 @@
-from rest_framework import generics, viewsets
+"""from rest_framework import generics, viewsets
 from rest_framework.response import Response
 from knox.models import AuthToken
 from TestApp.serializer import UserSerializer, RegisterSerializer, UserMovieSerializer, RateSerializer,JoinModelSerializer
@@ -57,4 +57,71 @@ class JointView(ListAPIView):
         'select TestApp_usermovie.id,TestApp_usermovie.Movie,TestApp_usermovie.Title,TestApp_ratingrates.Rating from TestApp_usermovie  inner join TestApp_ratingrates on TestApp_usermovie.id=TestApp_ratingrates.id')
     serializer_class = JoinModelSerializer
 
+"""
 
+from rest_framework import generics, permissions, viewsets
+from rest_framework.response import Response
+from rest_framework.decorators import permission_classes
+from rest_framework.permissions import IsAuthenticated
+
+from knox.models import AuthToken
+
+from TestApp.models import Movie, Rating
+from TestApp.serializer import UserSerializer, RegisterSerializer, LoginSerializer, MovieSerializer, RatingSerializer
+
+
+# , RegisterSerializer, LoginSerializer, MovieSerializer
+
+
+class UserAPIView(generics.RetrieveAPIView):
+    permission_classes = [
+        permissions.IsAuthenticated,
+    ]
+    serializer_class = UserSerializer
+
+    def get_object(self):
+        return self.request.user
+
+
+class RegisterAPIView(generics.GenericAPIView):
+    serializer_class = RegisterSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.save()
+        return Response({
+            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+            "token": AuthToken.objects.create(user)[1]
+        })
+
+
+class LoginAPIView(generics.GenericAPIView):
+    serializer_class = LoginSerializer
+
+    def post(self, request, *args, **kwargs):
+        serializer = self.get_serializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        user = serializer.validated_data
+        return Response({
+            "user": UserSerializer(user, context=self.get_serializer_context()).data,
+            "token": AuthToken.objects.create(user)[1]
+        })
+
+
+class MovieAPIView(generics.ListCreateAPIView):
+    serializer_class = MovieSerializer
+
+    def get_queryset(self):
+        return Movie.objects.all()
+
+    @permission_classes([IsAuthenticated])
+    def perform_create(self, serializer):
+        serializer.save(added_by=self.request.user)
+
+
+class RatingAPIView(generics.ListCreateAPIView):
+    serializer_class = RatingSerializer
+
+    def get_queryset(self):
+        return Rating.objects.all()
