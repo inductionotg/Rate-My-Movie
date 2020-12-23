@@ -1,4 +1,4 @@
-from django.db import models
+'''from django.db import models
 
 
 # Create your models here.
@@ -17,3 +17,26 @@ class JoinModel(models.Model):
     Movie=models.CharField(max_length=64)
     Title=models.CharField(max_length=128)
     Rating=models.IntegerField()
+'''
+
+from django.db import models
+from django.contrib.auth.models import User
+
+
+class Movie(models.Model):
+    title = models.CharField(max_length=128)
+    director = models.CharField(max_length=128)
+    added_by = models.ForeignKey(User, related_name="movies", on_delete=models.CASCADE, null=True)
+    added_at = models.DateTimeField(auto_now_add=True)
+    #rating=models.IntegerField()
+    class Meta:
+        db_table="Movie"
+
+class Rating(models.Model):
+    rating= models.ForeignKey(Movie, null=True, on_delete=models.CASCADE)
+
+    class Meta:
+        db_table = "Rating"
+
+
+
