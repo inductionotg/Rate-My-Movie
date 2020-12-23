@@ -58,7 +58,9 @@ class JointView(ListAPIView):
     serializer_class = JoinModelSerializer
 
 """
+from urllib import request
 
+from django.contrib.auth import login
 from rest_framework import generics, permissions, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import permission_classes
@@ -68,6 +70,7 @@ from knox.models import AuthToken
 
 from TestApp.models import Movie, Rating
 from TestApp.serializer import UserSerializer, RegisterSerializer, LoginSerializer, MovieSerializer, RatingSerializer
+from django.shortcuts import render
 
 
 # , RegisterSerializer, LoginSerializer, MovieSerializer
@@ -123,5 +126,17 @@ class MovieAPIView(generics.ListCreateAPIView):
 class RatingAPIView(generics.ListCreateAPIView):
     serializer_class = RatingSerializer
 
+
     def get_queryset(self):
         return Rating.objects.all()
+
+    @permission_classes([IsAuthenticated])
+    def create(self,serializer):
+        user=self.request.user
+        if not user:
+            return ("Please Authenticate Yourself")
+        else:
+            #queryset=
+            return  Response(Rating.objects.all().prefetch_related('movies'))
+
+
