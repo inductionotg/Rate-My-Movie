@@ -13,7 +13,7 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
-
+"""
 from django.contrib import admin
 from django.urls import path, include
 from TestApp.views import RegisterAPI, LoginAPI
@@ -34,4 +34,11 @@ urlpatterns = [
     path('api/logoutall/', knox_views.LogoutAllView.as_view(), name='logoutall'),
     path('', include(router.urls)),
     path('jointview/',views.JointView.as_view())
+]"""
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('api/auth/', include('TestApp.urls')),
+    path('admin/', admin.site.urls),
 ]
