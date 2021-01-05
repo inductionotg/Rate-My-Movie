@@ -51,6 +51,7 @@ from django.contrib.auth.models import User
 from rest_framework import serializers
 
 from TestApp.models import Movie, Rating
+from urllib import request
 
 
 class UserSerializer(serializers.ModelSerializer):
@@ -88,13 +89,18 @@ class MovieSerializer(serializers.ModelSerializer):
 
 
 class RatingSerializer(serializers.ModelSerializer):
+    user = serializers.CharField()
+    movie=serializers.CharField()
     # id=MovieSerializer(read_only=True)
-    '''def validate(self, attrs):
-        validated_data = super().validate(attrs)
-        if Rating.objects.filter(movies=validated_data['movies'], user=self.request.user).exists():
+
+
+    def validate(self,attrs):
+        validated_data  = super().validate(attrs)
+        user = self.context['request'].user
+        if Rating.objects.filter(movie=validated_data['movie'], user=user).exists():
             raise serializers.ValidationError('User already rated the movie')
-        return validated_data'''
+        return validated_data
     class Meta:
         model = Rating
-        fields = ['id', 'movies','rating','user']
+        fields = ['id', 'movie','rating','user']
 
