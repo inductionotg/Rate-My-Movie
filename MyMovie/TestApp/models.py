@@ -23,19 +23,20 @@ from django.db import models
 from django.contrib.auth.models import User
 from django.core.validators import MinValueValidator, MaxValueValidator
 
+
+
+
 class Movie(models.Model):
     title = models.CharField(max_length=128)
     director = models.CharField(max_length=128)
-    added_by = models.ForeignKey(User, related_name="movies", on_delete=models.CASCADE, null=True)
+    added_by = models.ForeignKey(User,related_name="movies", on_delete=models.CASCADE, null=True)
     added_at = models.DateTimeField(auto_now_add=True)
 
     # rating=models.IntegerField()
     class Meta:
         db_table = "Movie"
 
-
 class Rating(models.Model):
-    movies=models.CharField(max_length=128)
     rating = models.IntegerField(validators=[MinValueValidator(0),
                                        MaxValueValidator(5)])
 
