@@ -127,14 +127,33 @@ class MovieAPIView(generics.ListCreateAPIView):
 class RatingAPIView(generics.ListCreateAPIView):
     serializer_class = RatingSerializer
 
-
-
-
     def get_queryset(self):
         return Rating.objects.all()
 
+    def rate(self, request, pk=None):
+        user = self.request.user
+        if not user and user.is_active:
+            return None
+        else:
+            movie = Movie.objects.get(added_by_id=pk)
+            rating = Rating.objects.get(user=id, rating=added_by_id)
+            rating.save()
+            serializer = RatingSerializer
+            response = {'message': 'Rating Added', 'results': serializer.data}
+            return Response(response, status=HTTP_200_OK)
 
-        '''qs = Rating.objects.all()
+
+
+
+
+
+
+
+
+
+
+
+    '''qs = Rating.objects.all()
         qs1= Movie.objects.all()
         qs3=qs1.filter(added_by)
         qs2 =qs | qs
