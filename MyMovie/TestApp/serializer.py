@@ -88,7 +88,7 @@ class MovieSerializer(serializers.ModelSerializer):
 
 
 class RatingSerializer(serializers.ModelSerializer):
-    id=serializers.PrimaryKeyRelatedField(many=True ,read_only=True)
+    # id=MovieSerializer(read_only=True)
     class Meta:
         model = Rating
-        fields = ['id','movies', 'rating']
+        fields = ['id', 'rating']
