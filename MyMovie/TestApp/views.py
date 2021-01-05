@@ -70,6 +70,7 @@ from knox.models import AuthToken
 
 from TestApp.models import Movie, Rating
 from TestApp.serializer import UserSerializer, RegisterSerializer, LoginSerializer, MovieSerializer, RatingSerializer
+from django.db.models import Q
 from django.shortcuts import render
 
 
@@ -127,16 +128,35 @@ class RatingAPIView(generics.ListCreateAPIView):
     serializer_class = RatingSerializer
 
 
+
+
     def get_queryset(self):
         return Rating.objects.all()
 
-    @permission_classes([IsAuthenticated])
-    def create(self,serializer):
+
+        '''qs = Rating.objects.all()
+        qs1= Movie.objects.all()
+        qs3=qs1.filter(added_by)
+        qs2 =qs | qs
+        return qs2'''
+
+    '''@permission_classes([IsAuthenticated])
+    def perform_create(self, serializer):
+        user = self.request.user
+        if not user:
+            qs = Rating.objects.all()
+            qs1 = Movie.objects.all()
+            qs3 = qs1.filter(added_by)
+            qs2 = qs | qs
+        return qs2
+        #return Rating.objects.filter(added_by=user)
+    '''
+
+    """def create(self,serializer):
+        return Rating.objects.all()
         user=self.request.user
         if not user:
             return ("Please Authenticate Yourself")
         else:
-            #queryset=
-            return  Response(Rating.objects.all().prefetch_related('movies'))
-
-
+        
+            return  Response(Rating.objects.all().prefetch_related('movies'))"""
