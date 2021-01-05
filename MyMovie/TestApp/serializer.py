@@ -89,11 +89,11 @@ class MovieSerializer(serializers.ModelSerializer):
 
 class RatingSerializer(serializers.ModelSerializer):
     # id=MovieSerializer(read_only=True)
-    def validate(self, attrs):
+    '''def validate(self, attrs):
         validated_data = super().validate(attrs)
         if Rating.objects.filter(movies=validated_data['movies'], user=self.request.user).exists():
             raise serializers.ValidationError('User already rated the movie')
-        return validated_data
+        return validated_data'''
     class Meta:
         model = Rating
         fields = ['id', 'movies','rating','user']
