@@ -89,8 +89,7 @@ class MovieSerializer(serializers.ModelSerializer):
 
 
 class RatingSerializer(serializers.ModelSerializer):
-    user = serializers.CharField()
-    movie=serializers.CharField()
+
     # id=MovieSerializer(read_only=True)
 
 
