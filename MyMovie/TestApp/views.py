@@ -70,11 +70,7 @@ from knox.models import AuthToken
 
 from TestApp.models import Movie, Rating
 from TestApp.serializer import UserSerializer, RegisterSerializer, LoginSerializer, MovieSerializer, RatingSerializer
-from django.db.models import Q
-from django.shortcuts import render
-
-
-# , RegisterSerializer, LoginSerializer, MovieSerializer
+from TestApp.permissions import UserPermission
 
 
 class UserAPIView(generics.RetrieveAPIView):
@@ -128,8 +124,9 @@ class MovieAPIView(generics.ListCreateAPIView):
 class RatingAPIView(generics.CreateAPIView):
     serializer_class = RatingSerializer
 
-    @permission_classes([IsAuthenticated])
+    @permission_classes([IsAuthenticated,UserPermission])
     def perform_create(self, serializer):
+
         serializer.save(user=self.request.user)
 
 
