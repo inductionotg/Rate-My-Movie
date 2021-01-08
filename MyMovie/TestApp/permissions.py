@@ -1,58 +1,38 @@
 from rest_framework import permissions
+from django.http import Http404
 from TestApp.models import *
+from rest_framework.permissions import BasePermission, SAFE_METHODS
+"""
+class UserPermission(BasePermission):
+    
+    Allow users who have not added the movie to rate the movie once.
+    
 
+    def has_permission(self, request, view):
+        try:
+            movie = Movie.objects.get(pk=request.data['movie'])
+        except Movie.DoesNotExist:
+            raise Http404
 
-class UserPermission(permissions.BasePermission):
-    message = 'Adding ratings by same user not allowed.'
-
-    def has_permission(self, request, view, attrs):
-        allowed_methods = ['POST', 'PATCH']
-        # validated_data = self.context['request'].movie
-        user = self.context['request'].user
-        ratings = Rating.objects.filter(movie=validated_data['movie'], user=user)
-        if validated_data['movie'].added_by == user:
+        if request.user != movie.added_by:
+            try:
+                Rating.objects.get(movie=request.data['movie'], user=request.user)
+                return False
+            except Rating.DoesNotExist:
+                return True
+        return False
+    """
+class UserPermission(BasePermission):
+    message="You cant rate it "
+    def has_permission(self, request, view):
+        movie =Movie.objects.get(pk=request.data['movie'])
+        user = request.data['user']
+        ratings = Rating.objects.filter(movie=request.data['movie'], user=user)
+        if movie.added_by == user:
             return False
         elif request.method in SAFE_METHODS and not ratings.exists():
             return True
         else:
             return False
 
-    '''def has_permission(self, request, view, attrs):
-        allowed_methods = ['POST', 'PATCH']
-        # validated_data = super().validate(attrs)
-        #user = self.context['request'].user
-        user = Movie.objects.get(id=added_by)
-        movie=Rating.objects.get(id=user)
-        if user==movie :
 
-            #request.method in SAFE_METHODS and Rating.objects.filter(movie=movie_id, user=user).exists():
-            return False
-        else:
-            return True
-            '''
-
-
-"""
-class Add(BasePermission):
-    def has_permission(self, request, view):
-        allowed_methods = ['POST', 'PATCH']
-        user = Movie.objects.get(id=user_id)
-        t = Rating.objects.filter(added_by_id=user)
-        if request.method in allowed_methods:
-            if t == user:
-                return False
-            else:
-                return True
-        else:
-            return True
-"""
-
-"""
-class Add(BasePermission):
-    def has_permission(self, request, view):
-        validated_data = super().validate(attrs)
-        user = self.context['request'].user
-        if Rating.objects.filter(movie=validated_data['movie'], user=user).exists():
-            raise serializers.ValidationError('User already rated the movie')
-        return validated_data
-"""
