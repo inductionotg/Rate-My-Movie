@@ -65,11 +65,12 @@ from rest_framework import generics, permissions, viewsets
 from rest_framework.response import Response
 from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
-
+from django.db.models import Avg
 from knox.models import AuthToken
 
 from TestApp.models import Movie, Rating
 from TestApp.serializer import UserSerializer, RegisterSerializer, LoginSerializer, MovieSerializer, RatingSerializer
+
 from TestApp.permissions import UserPermission
 
 
@@ -120,20 +121,15 @@ class MovieAPIView(generics.ListCreateAPIView):
         serializer.save(added_by=self.request.user)
 
 
-
 class RatingAPIView(generics.CreateAPIView):
     serializer_class = RatingSerializer
+    permission_classes = (IsAuthenticated, UserPermission)
 
-    @permission_classes([IsAuthenticated,UserPermission])
+
     def perform_create(self, serializer):
-
         serializer.save(user=self.request.user)
 
+    def get_queryset(self):
 
 
-
-
-
-
-
-
+       return Ratings.objects.filter(movies__name='movie_name').aggregrate(Avg('rating'))
