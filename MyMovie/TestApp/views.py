@@ -67,12 +67,12 @@ from rest_framework.decorators import permission_classes
 from rest_framework.permissions import IsAuthenticated
 from django.db.models import Avg
 from knox.models import AuthToken
-
+from rest_framework.views import APIView
 from TestApp.models import Movie, Rating
 from TestApp.serializer import UserSerializer, RegisterSerializer, LoginSerializer, MovieSerializer, RatingSerializer
-
+from rest_framework import status
 from TestApp.permissions import UserPermission
-
+from functools import partial
 
 class UserAPIView(generics.RetrieveAPIView):
     permission_classes = [
@@ -110,6 +110,7 @@ class LoginAPIView(generics.GenericAPIView):
         })
 
 
+"""
 class MovieAPIView(generics.ListCreateAPIView):
     serializer_class = MovieSerializer
 
@@ -119,8 +120,8 @@ class MovieAPIView(generics.ListCreateAPIView):
     @permission_classes([IsAuthenticated])
     def perform_create(self, serializer):
         serializer.save(added_by=self.request.user)
-
-
+"""
+"""
 class RatingAPIView(generics.CreateAPIView):
     serializer_class = RatingSerializer
     permission_classes = (IsAuthenticated, UserPermission)
@@ -133,3 +134,50 @@ class RatingAPIView(generics.CreateAPIView):
 
 
        return Ratings.objects.filter(movies__name='movie_name').aggregrate(Avg('rating'))
+"""
+
+
+class MovieApi(APIView):
+    permission_classes = [IsAuthenticated]
+    serializer_class = MovieSerializer
+    def get(self, request, format=None):
+        movie = Movie.objects.all()
+        serializer = MovieSerializer(movie, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, *args, **kwargs):
+
+        data = request.data
+        serializer = self.serializer_class(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(added_by=self.request.user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+class RatingApi(APIView):
+    permission_classes = (IsAuthenticated, UserPermission)
+    serializer_class = RatingSerializer
+
+    def get(self, request, format=None):
+        rating = Rating.objects.all()
+        serializer = RatingSerializer(rating, many=True)
+        return Response(serializer.data)
+
+    def post(self, request, *args, **kwargs):
+        data = request.data
+        serializer = self.serializer_class(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(user=self.request.user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+    """
+        movie_data = request.data
+
+        new_movie = Movie.objects.create(title=movie_data["title"], director=movie_data[
+            "director"],added_by=movie_data["self.request.user"])
+
+        new_movie.save()
+
+        serializer = MovieSerializer(new_movie)
+
+        return Response(serializer.data)
+    """
