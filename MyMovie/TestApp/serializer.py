@@ -89,7 +89,7 @@ class MovieSerializer(serializers.ModelSerializer):
 
 
 class RatingSerializer(serializers.ModelSerializer):
-    movie = MovieSerializer(read_only=True, many=True)
+    movie = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Rating
