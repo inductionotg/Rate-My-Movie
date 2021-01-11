@@ -74,6 +74,7 @@ from rest_framework import status
 from TestApp.permissions import UserPermission
 from functools import partial
 
+
 class UserAPIView(generics.RetrieveAPIView):
     permission_classes = [
         permissions.IsAuthenticated,
@@ -120,8 +121,8 @@ class MovieAPIView(generics.ListCreateAPIView):
     @permission_classes([IsAuthenticated])
     def perform_create(self, serializer):
         serializer.save(added_by=self.request.user)
-"""
-"""
+
+
 class RatingAPIView(generics.CreateAPIView):
     serializer_class = RatingSerializer
     permission_classes = (IsAuthenticated, UserPermission)
@@ -129,7 +130,8 @@ class RatingAPIView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         serializer.save(user=self.request.user)
-
+"""
+"""
     def get_queryset(self):
 
 
@@ -140,18 +142,19 @@ class RatingAPIView(generics.CreateAPIView):
 class MovieApi(APIView):
     permission_classes = [IsAuthenticated]
     serializer_class = MovieSerializer
+
     def get(self, request, format=None):
         movie = Movie.objects.all()
         serializer = MovieSerializer(movie, many=True)
         return Response(serializer.data)
 
     def post(self, request, *args, **kwargs):
-
         data = request.data
         serializer = self.serializer_class(data=data)
         serializer.is_valid(raise_exception=True)
         serializer.save(added_by=self.request.user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 class RatingApi(APIView):
     permission_classes = (IsAuthenticated, UserPermission)
@@ -164,20 +167,29 @@ class RatingApi(APIView):
 
     def post(self, request, *args, **kwargs):
         data = request.data
+        """
+        rating_data = request.data
+
+        new_rating = Rating.objects.create(rating=rating_data["rating"])
+
+        new_rating.save(user=self.request.user, movie=added_by_id)
+
+        serializer = MovieSerializer(new_rating)
+
+        return Response(serializer.data)
+
+        """
         serializer = self.serializer_class(data=data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(user=self.request.user)
+        serializer.save()
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
-    """
-        movie_data = request.data
 
+"""
+        movie_data = request.data
         new_movie = Movie.objects.create(title=movie_data["title"], director=movie_data[
             "director"],added_by=movie_data["self.request.user"])
-
         new_movie.save()
-
         serializer = MovieSerializer(new_movie)
-
         return Response(serializer.data)
     """
