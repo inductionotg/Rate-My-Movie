@@ -89,14 +89,9 @@ class MovieSerializer(serializers.ModelSerializer):
 
 
 class RatingSerializer(serializers.ModelSerializer):
-
-
-    # id=MovieSerializer(read_only=True)
-
-
-
+    movie = MovieSerializer(read_only=True, many=True)
 
     class Meta:
         model = Rating
-        fields = ['id', 'movie','rating']
-
+        fields = ['id', 'movie', 'rating']
+        # read_only_fields=['user']
