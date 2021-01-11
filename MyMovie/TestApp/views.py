@@ -167,6 +167,12 @@ class RatingApi(APIView):
 
     def post(self, request, *args, **kwargs):
         data = request.data
+        #request.data['user'] = request.user.id
+        serializer = self.serializer_class(data=data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save(request.data['user'] == self.request.user)
+        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
         """
         rating_data = request.data
 
@@ -179,10 +185,7 @@ class RatingApi(APIView):
         return Response(serializer.data)
 
         """
-        serializer = self.serializer_class(data=data)
-        serializer.is_valid(raise_exception=True)
-        serializer.save(user=self.request.user)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
+
 
 
 """
