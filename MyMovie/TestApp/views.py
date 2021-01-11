@@ -170,7 +170,7 @@ class RatingApi(APIView):
         #request.data['user'] = request.user.id
         serializer = self.serializer_class(data=data)
         serializer.is_valid(raise_exception=True)
-        serializer.save(request.data['user'] == self.request.user)
+        serializer.save(user=self.request.user)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
 
         """
