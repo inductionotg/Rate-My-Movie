@@ -39,7 +39,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'knox',
+    'djcelery',
     'TestApp'
+    
 ]
 
 MIDDLEWARE = [
@@ -128,6 +130,19 @@ USE_L10N = True
 
 USE_TZ = True
 
+
+BROKER_URL = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_ACCEPT_CONTENT = ['application/json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'Asia/Calcutta'
+
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER='username@gmail.com'
+EMAIL_HOST_PASSWORD='password'
+EMAIL_PORT = 587
+EMAIL_USE_TLS=True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
