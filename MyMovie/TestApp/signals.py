@@ -6,6 +6,5 @@ from TestApp.models import Rating
 
 @receiver(post_save, sender=Rating)
 def rating(sender, instance, **kwargs):
-    if instance== True:
-        send_rating.apply_async(eta=now)
-                                  
+    if instance.medium == 'email':
+        send_rating.delay(eta=now)
