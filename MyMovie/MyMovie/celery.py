@@ -11,12 +11,13 @@ app = Celery('MyMovie')
 app.config_from_object('django.conf:settings')
 app.conf.beat_schedule = {
     'add-every-30-seconds': {
-        'task': 'TestApp.tasks.send_rating',
+        'task': 'TestApp.tasks.send_mail_task',
         'schedule':crontab(),
-        #'args': ('ritesh2000.sinha@gmail.com',)
+        #'args': ('pk',)
     }
 
 }
+
 app.autodiscover_tasks(lambda: settings.INSTALLED_APPS)
 @app.task(bind=True)
 def debug_task(self):
