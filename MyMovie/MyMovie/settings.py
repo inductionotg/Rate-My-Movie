@@ -140,11 +140,12 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 CELERY_TIMEZONE = 'Asia/Calcutta'
 
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER='username@gmail.com'
-EMAIL_HOST_PASSWORD='password'
-EMAIL_PORT = 587
-EMAIL_USE_TLS=True
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL=True
+EMAIL_HOST = ('smtp.fastmail.com')
+EMAIL_PORT = ('465')
+EMAIL_HOST_USER = ('ritesh30@fastmail.com')
+EMAIL_HOST_PASSWORD = ("vnb4srz83lkwysal")
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
