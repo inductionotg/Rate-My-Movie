@@ -7,8 +7,17 @@
             * Post
         
         * Success Response
+        
+                json         
 	
-             {"user":{"id":21,"username":"hp1","email":"rit@gmail.com"},"token":"53b5c7208b5a15a22879655d9eec685661ca1bee95bac901b6a2d436dcdfb6aa"}
+                {
+                "user":{
+                "id":21,
+                "username":"hp1",
+                "email":"rit@gmail.com"
+                },
+                "token":"53b5c7208b5a15a22879655d9eec685661ca1bee95bac901b6a2d436dcdfb6aa"
+                }
             
    - Login
 
@@ -50,19 +59,30 @@
         - GET
     - sucess response
     
-        1.Post- {"id":37,"title":"Transformer","director":"XYZ"}
+        1.Post
+        
+               JSON
+                
+               {
+                "id":37,
+                "title":"Transformer",
+                "director":"XYZ"
+               }
      
-        2.Get-   {
-            "id": 36,
-            "title": "Transformer",
-            "director": "XYZ"
-        },
-        {
-            "id": 37,
-            "title": "Transformer",
-            "director": "XYZ"
-        }
-    ]
+        2.Get  
+            
+                JSON
+            {
+                "id": 36,
+                "title": "Transformer",
+                "director": "XYZ"
+            },
+            {
+                "id": 37,
+                "title": "Transformer",
+                "director": "XYZ"
+            }
+    
 - Rating
 
     **add ratings**
@@ -75,27 +95,35 @@
         
     - Sucess Response
         
-        - Post-
+        - Post
         
-            - {"detail":"You cant rate it "}
+                JSON
         
-        - Get-
-         {
-            "id": 15,
-            "movie": 6,
-            "rating": 2
-        },
-        {
-            "id": 16,
-            "movie": 6,
-            "rating": 2
-        },
+                {
+                "detail":"You cant rate it "
+                }
+        
+         - Get
+         
+            json
+         
+         
+            {
+                "id": 15,
+                "movie": 6,
+                "rating": 2
+            },
+            {
+                "id": 16,
+                "movie": 6,
+                "rating": 2
+            },
     
-        {
-            "id": 17,
-            "movie": 3,
-            "rating": 4
-        },
+            {
+                "id": 17,
+                "movie": 3,
+                "rating": 4
+            },
         
 - Logout
 
