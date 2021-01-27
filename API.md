@@ -1,14 +1,13 @@
-1.Register
-
-    Registration for the user
-    
-	Url
+#End Points   
+   ##Register
+   
+   
+        * Registration for the user
+	    * Url
 	
-	http://127.0.0.1:8000/api/auth/register
-	
-	Method
-	
-        Post
+	        * http://127.0.0.1:8000/api/auth/register
+	    * Method
+            * Post
         
 	Success Response
 	
