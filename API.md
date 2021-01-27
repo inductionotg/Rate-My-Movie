@@ -1,5 +1,5 @@
-#End Points   
- ##Register
+# End Points   
+   ## Register
    - Registration for the user
 	    * Url
 	        * http://127.0.0.1:8000/api/auth/register
@@ -54,6 +54,14 @@
                         
                         "token": "847f06d4ec4458e4f2f8e3e219cd4b0871abf8723ccd0e53ef1f73219ea66da7"
                     }
+        - Error 
+            -   403 UnAuthorized Access
+                
+                JSON
+                
+                 {
+                    "detail": "Authentication credentials were not provided."
+                  }
 
 - Movie
 
