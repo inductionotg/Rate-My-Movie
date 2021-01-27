@@ -8,7 +8,7 @@
         
         * Success Response
 	
-            * {"user":{"id":21,"username":"hp1","email":"rit@gmail.com"},"token":"53b5c7208b5a15a22879655d9eec685661ca1bee95bac901b6a2d436dcdfb6aa"}
+             {"user":{"id":21,"username":"hp1","email":"rit@gmail.com"},"token":"53b5c7208b5a15a22879655d9eec685661ca1bee95bac901b6a2d436dcdfb6aa"}
             
    - Login
 
