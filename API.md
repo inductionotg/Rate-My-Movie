@@ -20,15 +20,24 @@
         
             - POST
         - Success Response
-    
-             {
-                - "user": {
-                   - "id": 21,
-                   - "username": "hp1",
-                   - "email": "rit@gmail.com"
+                    
+                    
+                    json
+                    
+                    {
+             
+                    "user": {
+                
+                    "id": 21,
+                   
+                    "username": "hp1",
+                   
+                    "email": "rit@gmail.com"
+                   
                         },
-                       - "token": "847f06d4ec4458e4f2f8e3e219cd4b0871abf8723ccd0e53ef1f73219ea66da7"
-              }
+                        
+                        "token": "847f06d4ec4458e4f2f8e3e219cd4b0871abf8723ccd0e53ef1f73219ea66da7"
+                    }
 
 - Movie
 
