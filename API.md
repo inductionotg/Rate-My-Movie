@@ -21,7 +21,14 @@
             - POST
         - Success Response
     
-            * {"user":{"id":21,"username":"hp1","email":"rit@gmail.com"},"token":"a4c5c1f43267d50a66dae373639290ceefa8d737830825689054f103fca88f78"}
+             {
+                "user": {
+                    "id": 21,
+                    "username": "hp1",
+                    "email": "rit@gmail.com"
+                        },
+                        "token": "847f06d4ec4458e4f2f8e3e219cd4b0871abf8723ccd0e53ef1f73219ea66da7"
+              }
 
 - Movie
 
