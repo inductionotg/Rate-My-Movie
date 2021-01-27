@@ -105,19 +105,21 @@
         
          - Get
          
-                json
-         
+                JSON
+                
          
             {
                 "id": 15,
                 "movie": 6,
                 "rating": 2
             },
+            
             {
                 "id": 16,
                 "movie": 6,
                 "rating": 2
             },
+    
     
             {
                 "id": 17,
